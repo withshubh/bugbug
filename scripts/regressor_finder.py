@@ -185,9 +185,7 @@ class RegressorFinder(object):
 
         logger.info("Get previously classified commits...")
         prev_bug_fixing_commits = list(db.read(BUG_FIXING_COMMITS_DB))
-        prev_bug_fixing_commits_nodes = set(
-            bug_fixing_commit["rev"] for bug_fixing_commit in prev_bug_fixing_commits
-        )
+        prev_bug_fixing_commits_nodes = {bug_fixing_commit["rev"] for bug_fixing_commit in prev_bug_fixing_commits}
         logger.info(f"Already classified {len(prev_bug_fixing_commits)} commits...")
 
         # TODO: Switch to the pure Defect model, as it's better in this case.
@@ -310,15 +308,13 @@ class RegressorFinder(object):
 
         logger.info("Get previously found bug-introducing commits...")
         prev_bug_introducing_commits = list(db.read(db_path))
-        prev_bug_introducing_commits_nodes = set(
-            bug_introducing_commit["bug_fixing_rev"]
-            for bug_introducing_commit in prev_bug_introducing_commits
-        )
+        prev_bug_introducing_commits_nodes = {bug_introducing_commit["bug_fixing_rev"]
+            for bug_introducing_commit in prev_bug_introducing_commits}
         logger.info(
             f"Already classified {len(prev_bug_introducing_commits)} commits..."
         )
 
-        hashes_to_ignore = set(commit["rev"] for commit in commits_to_ignore)
+        hashes_to_ignore = {commit["rev"] for commit in commits_to_ignore}
 
         with open("git_hashes_to_ignore", "w") as f:
             git_hashes = mercurial_to_git(

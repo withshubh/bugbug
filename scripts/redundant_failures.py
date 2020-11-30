@@ -13,7 +13,7 @@ def count(is_first_task, is_second_task):
 
     print(f"Analyzing {len(push_data)} pushes...")
 
-    all_tasks = set(task for _, _, push_tasks, _, _ in push_data for task in push_tasks)
+    all_tasks = {task for _, _, push_tasks, _, _ in push_data for task in push_tasks}
 
     print(f"Considering {len(all_tasks)} tasks...")
 

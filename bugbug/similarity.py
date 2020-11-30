@@ -168,12 +168,10 @@ class BaseSimilarity(abc.ABC):
     def evaluation(self):
         # A map from bug ID to its duplicate IDs
         duplicates = defaultdict(set)
-        all_ids = set(
-            bug["id"]
+        all_ids = {bug["id"]
             for bug in bugzilla.get_bugs()
             if bug["creator"] not in REPORTERS_TO_IGNORE
-            and "dupeme" not in bug["keywords"]
-        )
+            and "dupeme" not in bug["keywords"]}
 
         for bug in bugzilla.get_bugs():
             dupes = [entry for entry in bug["duplicates"] if entry in all_ids]
@@ -582,13 +580,11 @@ class Word2VecWmdRelaxSimilarity(Word2VecSimilarityBase):
         embeddings = np.array(
             [self.w2vmodel.wv[word] for word in words], dtype=np.float32
         )
-        nbow = dict(
-            (
-                (index, list(chain([None], zip(*document))))
+        nbow = {
+                index: list(chain([None], zip(*document)))
                 for index, document in enumerate(documents)
                 if document != []
-            )
-        )
+            }
         nbow["query"] = tuple([None] + list(zip(*query)))
         distances = WMD(embeddings, nbow, vocabulary_min=1).nearest_neighbors("query")
 

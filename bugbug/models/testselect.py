@@ -777,11 +777,9 @@ class TestConfigGroupSelectModel(TestSelectModel):
 def eval_apply_transforms(model, push, confidence_threshold, reduction, cap, minimum):
     number_configs = None
 
-    selected = set(
-        name
+    selected = {name
         for name, confidence in push["all_possibly_selected"].items()
-        if confidence >= confidence_threshold
-    )
+        if confidence >= confidence_threshold}
 
     if reduction is not None:
         if model.granularity == "label":

@@ -94,11 +94,9 @@ class AssigneeModel(BugModel):
             classes[bug_id] = bug_data["assigned_to_detail"]["email"]
 
         assignee_counts = Counter(classes.values()).most_common()
-        top_assignees = set(
-            assignee
+        top_assignees = {assignee
             for assignee, count in assignee_counts
-            if count > MINIMUM_ASSIGNMENTS
-        )
+            if count > MINIMUM_ASSIGNMENTS}
 
         print(f"{len(top_assignees)} assignees")
         for assignee, count in assignee_counts:

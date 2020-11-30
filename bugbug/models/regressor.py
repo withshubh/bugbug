@@ -112,11 +112,9 @@ class RegressorModel(CommitModel):
     def get_labels(self):
         classes = {}
 
-        regressors = set(
-            r["bug_introducing_rev"]
+        regressors = {r["bug_introducing_rev"]
             for r in db.read(BUG_INTRODUCING_COMMITS_DB)
-            if r["bug_introducing_rev"]
-        )
+            if r["bug_introducing_rev"]}
 
         for commit_data in repository.get_commits():
             if commit_data["backedoutby"]:
@@ -182,7 +180,7 @@ class RegressorModel(CommitModel):
             commits.append(commit_data)
 
         print(f"{len(commits)} commits in the evaluation set")
-        bugs_num = len(set(commit["bug_id"] for commit in commits))
+        bugs_num = len({commit["bug_id"] for commit in commits})
         print(f"{bugs_num} bugs in the evaluation set")
 
         # Sort commits by bug ID, so we can use itertools.groupby to group them by bug ID.

@@ -165,7 +165,7 @@ def get_ids_between(date_from, date_to, security=False):
 
 def download_bugs(bug_ids, products=None, security=False):
     old_bug_count = 0
-    new_bug_ids = set(int(bug_id) for bug_id in bug_ids)
+    new_bug_ids = {int(bug_id) for bug_id in bug_ids}
     for bug in get_bugs(include_invalid=True):
         old_bug_count += 1
         if int(bug["id"]) in new_bug_ids:

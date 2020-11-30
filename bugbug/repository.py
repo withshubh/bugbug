@@ -234,11 +234,9 @@ class Commit:
         self.files = files
         self.file_copies = file_copies
         self.components = list(
-            set(
-                path_to_component[path.encode("utf-8")].tobytes().decode("utf-8")
+            {path_to_component[path.encode("utf-8")].tobytes().decode("utf-8")
                 for path in files
-                if path.encode("utf-8") in path_to_component
-            )
+                if path.encode("utf-8") in path_to_component}
         )
         self.directories = get_directories(files)
         return self
@@ -731,13 +729,13 @@ def hg_log(hg: hglib.client, revs: List[bytes]) -> Tuple[Commit, ...]:
         bug_id = int(rev[3].decode("ascii")) if rev[3] else None
 
         reviewers = (
-            list(set(sys.intern(r) for r in rev[7].decode("utf-8").split(" ")))
+            list({sys.intern(r) for r in rev[7].decode("utf-8").split(" ")})
             if rev[7] != b""
             else []
         )
 
         backsout = (
-            list(set(sys.intern(r) for r in rev[8].decode("utf-8").split(" ")))
+            list({sys.intern(r) for r in rev[8].decode("utf-8").split(" ")})
             if rev[8] != b""
             else []
         )
@@ -1009,7 +1007,7 @@ def set_commits_to_ignore(
     ignore_revs_content = hg.cat(
         [os.path.join(repo_dir, ".hg-annotate-ignore-revs").encode("ascii")], rev=b"-1"
     ).decode("utf-8")
-    ignore_revs = set(line[:40] for line in ignore_revs_content.splitlines())
+    ignore_revs = {line[:40] for line in ignore_revs_content.splitlines()}
 
     for commit in commits:
         commit.ignored = (

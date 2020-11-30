@@ -481,7 +481,7 @@ class types(object):
 def merge_commits(commits: Sequence[repository.CommitDict]) -> repository.CommitDict:
     return repository.CommitDict(
         {
-            "nodes": list(commit["node"] for commit in commits),
+            "nodes": [commit["node"] for commit in commits],
             "pushdate": commits[0]["pushdate"],
             "types": list(set(sum((commit["types"] for commit in commits), []))),
             "files": list(set(sum((commit["files"] for commit in commits), []))),
@@ -666,12 +666,12 @@ def merge_commits(commits: Sequence[repository.CommitDict]) -> repository.Commit
 
 class CommitExtractor(BaseEstimator, TransformerMixin):
     def __init__(self, feature_extractors, cleanup_functions):
-        assert len(set(type(fe) for fe in feature_extractors)) == len(
+        assert len({type(fe) for fe in feature_extractors}) == len(
             feature_extractors
         ), "Duplicate Feature Extractors"
         self.feature_extractors = feature_extractors
 
-        assert len(set(type(cf) for cf in cleanup_functions)) == len(
+        assert len({type(cf) for cf in cleanup_functions}) == len(
             cleanup_functions
         ), "Duplicate Cleanup Functions"
         self.cleanup_functions = cleanup_functions

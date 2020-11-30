@@ -413,24 +413,20 @@ class commit_no_of_backouts(single_bug_feature):
 class components_touched(single_bug_feature):
     def __call__(self, bug, **kwargs):
         return list(
-            set(
-                component
+            {component
                 for commit in bug["commits"]
                 for component in commit["components"]
-                if not commit["backedoutby"]
-            )
+                if not commit["backedoutby"]}
         )
 
 
 class components_touched_num(single_bug_feature):
     def __call__(self, bug, **kwargs):
         return len(
-            set(
-                component
+            {component
                 for commit in bug["commits"]
                 for component in commit["components"]
-                if not commit["backedoutby"]
-            )
+                if not commit["backedoutby"]}
         )
 
 
@@ -572,12 +568,12 @@ class BugExtractor(BaseEstimator, TransformerMixin):
         commit_data=False,
         merge_data=True,
     ):
-        assert len(set(type(fe) for fe in feature_extractors)) == len(
+        assert len({type(fe) for fe in feature_extractors}) == len(
             feature_extractors
         ), "Duplicate Feature Extractors"
         self.feature_extractors = feature_extractors
 
-        assert len(set(type(cf) for cf in cleanup_functions)) == len(
+        assert len({type(cf) for cf in cleanup_functions}) == len(
             cleanup_functions
         ), "Duplicate Cleanup Functions"
         self.cleanup_functions = cleanup_functions

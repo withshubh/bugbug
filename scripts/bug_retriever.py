@@ -72,12 +72,10 @@ class Retriever(object):
         # Get IDs of bugs linked to commits (used for some commit-based models, e.g. backout and regressor).
         start_date = datetime.now() - relativedelta(years=3)
         commit_bug_ids = list(
-            set(
-                commit["bug_id"]
+            {commit["bug_id"]
                 for commit in repository.get_commits()
                 if commit["bug_id"]
-                and dateutil.parser.parse(commit["pushdate"]) >= start_date
-            )
+                and dateutil.parser.parse(commit["pushdate"]) >= start_date}
         )
         if limit:
             commit_bug_ids = commit_bug_ids[-limit:]
@@ -146,7 +144,7 @@ class Retriever(object):
             # We look for inconsistencies in all bugs first, then, on following passes,
             # we only look for inconsistencies in bugs that were found to be inconsistent in the first pass
             inconsistent_bugs = bug_snapshot.get_inconsistencies(inconsistent_bugs)
-            inconsistent_bug_ids = set(bug["id"] for bug in inconsistent_bugs)
+            inconsistent_bug_ids = {bug["id"] for bug in inconsistent_bugs}
 
             if len(inconsistent_bug_ids) == 0:
                 break

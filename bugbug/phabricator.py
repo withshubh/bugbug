@@ -58,7 +58,7 @@ def get(rev_ids: Collection[int]) -> Collection[RevisionDict]:
 
 def download_revisions(rev_ids: Collection[int]) -> None:
     old_rev_count = 0
-    new_rev_ids = set(int(rev_id) for rev_id in rev_ids)
+    new_rev_ids = {int(rev_id) for rev_id in rev_ids}
     for rev in get_revisions():
         old_rev_count += 1
         if rev["id"] in new_rev_ids:

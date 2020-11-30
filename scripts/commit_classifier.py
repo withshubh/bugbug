@@ -359,7 +359,7 @@ class CommitClassifier(object):
                     ),
                 )
             )
-            reviewers = set(reviewer["fields"]["username"] for reviewer in reviewers)
+            reviewers = {reviewer["fields"]["username"] for reviewer in reviewers}
 
             if reviewers:
                 message = replace_reviewers(message, reviewers)

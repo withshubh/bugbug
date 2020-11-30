@@ -612,14 +612,12 @@ def update_touched_together() -> Generator[None, Optional[Revision], None]:
             if len(commit["files"]) <= 50 and not commit["backedoutby"]:
                 # Number of times a source file was touched together with a directory.
                 for f1 in commit["files"]:
-                    for d2 in set(
-                        os.path.dirname(f) for f in commit["files"] if f != f1
-                    ):
+                    for d2 in {os.path.dirname(f) for f in commit["files"] if f != f1}:
                         set_touched_together(f1, d2)
 
                 # Number of times a directory was touched together with another directory.
                 for d1, d2 in itertools.combinations(
-                    list(set(os.path.dirname(f) for f in commit["files"])), 2
+                    list({os.path.dirname(f) for f in commit["files"]}), 2
                 ):
                     set_touched_together(d1, d2)
 
