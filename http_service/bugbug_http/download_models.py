@@ -22,7 +22,9 @@ def download_models():
         except FileNotFoundError:
             if ALLOW_MISSING_MODELS:
                 LOGGER.info(
-                    "Missing %r model, skipping because ALLOW_MISSING_MODELS is set", model_name)
+                    "Missing %r model, skipping because ALLOW_MISSING_MODELS is set",
+                    model_name,
+                )
                 return None
             else:
                 raise
