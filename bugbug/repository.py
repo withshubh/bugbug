@@ -234,9 +234,11 @@ class Commit:
         self.files = files
         self.file_copies = file_copies
         self.components = list(
-            {path_to_component[path.encode("utf-8")].tobytes().decode("utf-8")
+            {
+                path_to_component[path.encode("utf-8")].tobytes().decode("utf-8")
                 for path in files
-                if path.encode("utf-8") in path_to_component}
+                if path.encode("utf-8") in path_to_component
+            }
         )
         self.directories = get_directories(files)
         return self

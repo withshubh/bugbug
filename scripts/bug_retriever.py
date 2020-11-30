@@ -72,10 +72,12 @@ class Retriever(object):
         # Get IDs of bugs linked to commits (used for some commit-based models, e.g. backout and regressor).
         start_date = datetime.now() - relativedelta(years=3)
         commit_bug_ids = list(
-            {commit["bug_id"]
+            {
+                commit["bug_id"]
                 for commit in repository.get_commits()
                 if commit["bug_id"]
-                and dateutil.parser.parse(commit["pushdate"]) >= start_date}
+                and dateutil.parser.parse(commit["pushdate"]) >= start_date
+            }
         )
         if limit:
             commit_bug_ids = commit_bug_ids[-limit:]

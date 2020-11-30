@@ -413,20 +413,24 @@ class commit_no_of_backouts(single_bug_feature):
 class components_touched(single_bug_feature):
     def __call__(self, bug, **kwargs):
         return list(
-            {component
+            {
+                component
                 for commit in bug["commits"]
                 for component in commit["components"]
-                if not commit["backedoutby"]}
+                if not commit["backedoutby"]
+            }
         )
 
 
 class components_touched_num(single_bug_feature):
     def __call__(self, bug, **kwargs):
         return len(
-            {component
+            {
+                component
                 for commit in bug["commits"]
                 for component in commit["components"]
-                if not commit["backedoutby"]}
+                if not commit["backedoutby"]
+            }
         )
 
 

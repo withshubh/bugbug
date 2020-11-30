@@ -112,9 +112,11 @@ class RegressorModel(CommitModel):
     def get_labels(self):
         classes = {}
 
-        regressors = {r["bug_introducing_rev"]
+        regressors = {
+            r["bug_introducing_rev"]
             for r in db.read(BUG_INTRODUCING_COMMITS_DB)
-            if r["bug_introducing_rev"]}
+            if r["bug_introducing_rev"]
+        }
 
         for commit_data in repository.get_commits():
             if commit_data["backedoutby"]:

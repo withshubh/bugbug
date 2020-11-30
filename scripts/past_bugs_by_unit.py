@@ -36,9 +36,11 @@ class PastBugsCollector(object):
         )
         bug_fixing_commits = list(db.read(BUG_FIXING_COMMITS_DB))
 
-        bug_fixing_commits_nodes = {bug_fixing_commit["rev"]
+        bug_fixing_commits_nodes = {
+            bug_fixing_commit["rev"]
             for bug_fixing_commit in bug_fixing_commits
-            if bug_fixing_commit["type"] in ("d", "r")}
+            if bug_fixing_commit["type"] in ("d", "r")
+        }
 
         logger.info(f"{len(bug_fixing_commits_nodes)} bug-fixing commits to analyze")
 

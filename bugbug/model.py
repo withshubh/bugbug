@@ -712,9 +712,11 @@ class CommitModel(Model):
         if not self.bug_data:
             bug_map = None
         else:
-            all_bug_ids = {commit["bug_id"]
+            all_bug_ids = {
+                commit["bug_id"]
                 for commit in repository.get_commits()
-                if commit["node"] in classes}
+                if commit["node"] in classes
+            }
 
             bug_map = {
                 bug["id"]: bug

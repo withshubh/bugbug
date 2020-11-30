@@ -779,24 +779,32 @@ def test_filter_commits(ignored_commits_to_test):
         "commit",
     }
 
-    assert {commit["node"]
-        for commit in repository.filter_commits(commits, include_no_bug=True)} == {"commit_backedout", "commit", "commit_no_bug"}
+    assert {
+        commit["node"]
+        for commit in repository.filter_commits(commits, include_no_bug=True)
+    } == {"commit_backedout", "commit", "commit_no_bug"}
 
-    assert {commit["node"]
-        for commit in repository.filter_commits(commits, include_backouts=True)} == {"commit_backedout", "commit", "commit_backout"}
+    assert {
+        commit["node"]
+        for commit in repository.filter_commits(commits, include_backouts=True)
+    } == {"commit_backedout", "commit", "commit_backout"}
 
-    assert {commit["node"]
-        for commit in repository.filter_commits(commits, include_ignored=True)} == {
+    assert {
+        commit["node"]
+        for commit in repository.filter_commits(commits, include_ignored=True)
+    } == {
         "commit_backedout",
         "commit",
         "8ba995b74e18334ab3707f27e9eb8f4e37ba3d29",
         "commit_with_ignore_in_desc",
     }
 
-    assert {commit["node"]
+    assert {
+        commit["node"]
         for commit in repository.filter_commits(
             commits, include_no_bug=True, include_ignored=True
-        )} == {
+        )
+    } == {
         "commit_backedout",
         "commit",
         "commit_no_bug",
@@ -804,10 +812,12 @@ def test_filter_commits(ignored_commits_to_test):
         "commit_with_ignore_in_desc",
     }
 
-    assert {commit["node"]
+    assert {
+        commit["node"]
         for commit in repository.filter_commits(
             commits, include_no_bug=True, include_backouts=True, include_ignored=True
-        )} == {
+        )
+    } == {
         "commit_backedout",
         "commit",
         "commit_no_bug",

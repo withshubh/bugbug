@@ -199,9 +199,11 @@ class ComponentModel(BugModel):
         max_count = product_component_counts[0][1]
         threshold = max_count / threshold_ratio
 
-        return {product_component
+        return {
+            product_component
             for product_component, count in product_component_counts
-            if count > threshold}
+            if count > threshold
+        }
 
     def get_feature_names(self):
         return self.extraction_pipeline.named_steps["union"].get_feature_names()
