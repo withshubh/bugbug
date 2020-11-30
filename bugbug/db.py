@@ -22,7 +22,9 @@ DATABASES = {}
 logger = logging.getLogger(__name__)
 
 
-def register(path, url, version, support_files=[]):
+def register(path, url, version, support_files=None):
+    if support_files is None:
+        support_files = []
     DATABASES[path] = {"url": url, "version": version, "support_files": support_files}
 
     # Create DB parent directory.

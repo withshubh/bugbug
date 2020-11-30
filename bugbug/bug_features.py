@@ -53,7 +53,9 @@ class has_crash_signature(single_bug_feature):
 
 
 class keywords(single_bug_feature):
-    def __init__(self, to_ignore=set()):
+    def __init__(self, to_ignore=None):
+        if to_ignore is None:
+            to_ignore = set()
         self.to_ignore = to_ignore
 
     def __call__(self, bug, **kwargs):
@@ -524,7 +526,9 @@ class couple_delta_creation_date(couple_bug_feature):
 
 
 class couple_common_words_summary(couple_bug_feature):
-    def __init__(self, to_ignore=set()):
+    def __init__(self, to_ignore=None):
+        if to_ignore is None:
+            to_ignore = set()
         self.to_ignore = to_ignore
 
     def __call__(self, bugs):
@@ -534,7 +538,9 @@ class couple_common_words_summary(couple_bug_feature):
 
 
 class couple_common_words_comments(couple_bug_feature):
-    def __init__(self, to_ignore=set()):
+    def __init__(self, to_ignore=None):
+        if to_ignore is None:
+            to_ignore = set()
         self.to_ignore = to_ignore
 
     def __call__(self, bugs):
@@ -544,7 +550,9 @@ class couple_common_words_comments(couple_bug_feature):
 
 
 class couple_common_keywords(couple_bug_feature):
-    def __init__(self, to_ignore=set()):
+    def __init__(self, to_ignore=None):
+        if to_ignore is None:
+            to_ignore = set()
         self.to_ignore = to_ignore
 
     def __call__(self, bugs, **kwargs):
